@@ -21,7 +21,7 @@
 						<th class="text-center">#</th>
 						<!-- <th>Schedule</th> -->
 						<th>Event</th>
-						<th>Event Venue</th>
+						<th>Venue</th>
 						<th>Details</th>
 						<th>Status</th>
 						<th>Action</th>
