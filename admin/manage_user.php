@@ -2,7 +2,7 @@
 include('db_connect.php');
 session_start();
 if (isset($_GET['id'])) {
-	$user = $conn->query("SELECT * FROM tbl_user_accounts where id =" . $_GET['id']);
+	$user = $conn->query("SELECT * FROM tbl_unifast_staff where id =" . $_GET['id']);
 	foreach ($user->fetch_array() as $k => $v) {
 		$meta[$k] = $v;
 	}
@@ -15,15 +15,15 @@ if (isset($_GET['id'])) {
 		<input type="hidden" name="id" value="<?php echo isset($meta['id']) ? $meta['id'] : '' ?>">
 		<div class="form-group">
 			<label for="name">First Name</label>
-			<input type="text" name="firstname" id="firstname" class="form-control" value="<?php echo isset($meta['firstname']) ? $meta['firstname'] : '' ?>" required>
+			<input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo isset($meta['first_name']) ? $meta['first_name'] : '' ?>" required>
 		</div>
 		<div class="form-group">
 			<label for="name">Middle Name</label>
-			<input type="text" name="middlename" id="middlename" class="form-control" value="<?php echo isset($meta['middlename']) ? $meta['middlename'] : '' ?>">
+			<input type="text" name="middle_name" id="middle_name" class="form-control" value="<?php echo isset($meta['middle_name']) ? $meta['middle_name'] : '' ?>">
 		</div>
 		<div class="form-group">
 			<label for="name">Last Name</label>
-			<input type="text" name="lastname" id="lastname" class="form-control" value="<?php echo isset($meta['lastname']) ? $meta['lastname'] : '' ?>" required>
+			<input type="text" name="last_name" id="last_name" class="form-control" value="<?php echo isset($meta['last_name']) ? $meta['last_name'] : '' ?>" required>
 		</div>
 		<!-- <div class="form-group">
 			<label for="username">Email</label>

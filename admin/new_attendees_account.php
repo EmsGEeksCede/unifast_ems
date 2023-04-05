@@ -1,39 +1,99 @@
-<?//php include 'header.php'?>
+<?php include 'header.php' ?>
 <?php include '../admin/db_connect.php' ?>
 <?php
-$sql = mysqli_query($conn, "SELECT DISTINCT(hei_region_nir) FROM tbl_heis ORDER BY hei_region_nir ASC");
+// $sql = mysqli_query($conn, "SELECT DISTINCT(hei_psg_region) FROM tbl_heis ORDER BY hei_psg_region ASC");
+// $query = mysqli_query($conn, "SELECT DISTINCT(hei_psg_region) FROM tbl_heis WHERE status = 1 ORDER BY hei_psg_region ASC");
+?>
+<?php // $result = mysqli_query($conn, "SELECT hei_name FROM tbl_heis");
+?>
+
+<?php
+if (isset($_GET['id']) && !empty($_GET['id'])) {
+	$qry = $conn->query("SELECT * FROM tbl_user_accounts where id = {$_GET['id']}");
+	foreach ($qry->fetch_array() as $k => $v) {
+		if (!is_numeric($k)) {
+			$$k = $v;
+		}
+	}
+}
 ?>
 <?php
-$result = mysqli_query($conn, "SELECT hei_uii,hei_name FROM tbl_heis");
+// require_once '../libs/phpqrcode/qrlib.php';
+// $path = 'temp/';
+// $qrcode = $path . time() . ".png";
+// $qrimage = time() . ".png";
+// if (isset($_REQUEST['sbt-btn'])) {
+
+// 	$hei_region = $_REQUEST["hei_region"] . "\n";
+// 	$hei_name .= $_REQUEST["hei_name"] . "\n";
+// 	$firstname .= $_REQUEST["firstname"] . "\n";
+// 	$middlename .= $_REQUEST["middlename"] . "\n";
+// 	$lastname = $_REQUEST["lastname"] . "\n";
+// 	$suffix .= $_REQUEST["suffix"] . "\n";
+// 	$position .= $_REQUEST["position"] . "\n";
+// 	$contact .= $_REQUEST["contact"] . "\n";
+// 	$gender = $_REQUEST["gender"] . "\n";
+// 	$email .= $_REQUEST["email"] . "\n";
+// 	$password .= $_REQUEST["password"];
+// }
+// // $qrtext = $_REQUEST['qrtext'];
+// $query = mysqli_query($conn, "Insert into qrcode set hei_region='$hei_region', hei_region='$hei_region', firstname='$firstname', middlename='$middlename', lastname='$lastname', suffix='$suffix', position='$position', contact='$contact', gender='$gender', email='$email', password='$password', qrimage='$qrimage'");
+// if ($query) {
+?>
+	<!-- <script>
+		alert("Data save successfully");
+	</script> -->
+<?php
+// }
+// QRcode::png($hei_region, $hei_name, $firstname, $middlename, $lastname, $suffix, $position, $contact, $gender, $email, $password, $qrcode, 'H', 4, 4);
+// echo "<img src='" . $qrcode . "'>";
 ?>
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body">
-			<form action="" id="manage_user">
+			<form action="qrcode.php" id="manage_user">
 				<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
 
 				<div class="form-row align-items-center">
 					<div class="form-group col-md-4">
 						<b class="text-muted">Region</b>
-						<select name="hei_region" id="" class="form-control" required>
-							<option value="" disabled selected>- - - Select Region - - -</option>
+
+						<?php
+						$query = "SELECT DISTINCT(hei_psg_region) FROM tbl_heis ORDER BY hei_region_nir ASC";
+						$result = $conn->query($query);
+						?>
+
+						<select name="hei_region" id="hei_region" class="form-control" required>
+							<!-- <option value="" disabled selected>- - - Select Region - - -</option>
 							<?php
-							while ($row = mysqli_fetch_array($sql)) :
+							//while ($row = mysqli_fetch_array($sql)) : 
 							?>
-								<option><?php echo $row['hei_region_nir'] ?></option>
-							<?php endwhile;	?>
+								<option><? //php echo $row['hei_psg_region'] 
+										?></option>
+							<? //php endwhile;	
+							?> -->
+
+							<option value="" disabled selected>Select Region</option>
+							<?php
+							while ($row = mysqli_fetch_array($result)) :  ?>
+								<option><?php echo $row["hei_psg_region"]; ?></option>
+							<?php endwhile;
+							?>
 						</select>
 					</div>
 					<div class="form-group col-md-8">
 						<b class="text-muted">HEI Name</b>
-						<select name="hei_name" class="custom-select select2">
-							<option value=""></option>
-							<?php
-							while ($row = mysqli_fetch_array($result)) :
-							?>
-								<option value="<?php echo $row['hei_name']; ?>">
-									<?= $row['hei_name'] ?></option>
-							<?php endwhile; ?>
+						<select name="hei_name" id="hei_name" class="custom-select select2">
+							<option value="" id=""></option>
+							<!-- <?php
+									//while ($row = mysqli_fetch_array($result)) :
+									?>
+							<option value="<? //php echo $row['hei_name']; 
+											?>">
+								<//?= $row['hei_name'] 
+								?></option>
+							<? //php endwhile; 
+							?> -->
 						</select>
 					</div>
 				</div>
@@ -72,7 +132,6 @@ $result = mysqli_query($conn, "SELECT hei_uii,hei_name FROM tbl_heis");
 							<option value="" disabled selected>Please select</option>
 							<option <?php echo isset($gender) && $gender == "Male" ? "selected" : '' ?>>Male</option>
 							<option <?php echo isset($gender) && $gender == "Female" ? "selected" : '' ?>>Female</option>
-							<option <?php echo isset($gender) && $gender == "Other" ? "selected" : '' ?>>Other</option>
 						</select>
 					</div>
 				</div>
@@ -126,8 +185,9 @@ $result = mysqli_query($conn, "SELECT hei_uii,hei_name FROM tbl_heis");
 
 				<hr>
 				<div class="col-lg-12 text-right justify-content-center d-flex">
-					<button class="btn btn-primary mr-3	col-md-2">SAVE</button>
-					<button class="btn btn-secondary col-md-2" type="button" onclick="location.href = 'index.php?page=staff_list'">CANCEL</button>
+					<!-- <button class="btn btn-primary mr-3 col-md-2">SAVE</button> -->
+					<input type="submit" name="sbt-btn" value="SAVE" class="btn btn-primary mr-3 col-md-2" />
+					<button class="btn btn-secondary col-md-2" type="button" onclick="location.href = 'index.php?page=attendees_list'">CANCEL</button>
 				</div>
 			</form>
 		</div>
@@ -221,5 +281,22 @@ $result = mysqli_query($conn, "SELECT hei_uii,hei_name FROM tbl_heis");
 		togcpass.setAttribute('type', type);
 		// toggle the eye / eye slash icon
 		this.classList.toggle('bi-eye');
+	});
+
+
+
+	$(document).ready(function() {
+		$('#hei_region').on('change', function() {
+			var hei_name = $(this).val();
+			$.ajax({
+				type: 'POST',
+				url: 'region_to_hei.php',
+				data: 'hei_psg_region=' + hei_name,
+				success: function(html) {
+					$('#hei_name').html(html);
+					// alert(hei);
+				}
+			});
+		});
 	});
 </script>

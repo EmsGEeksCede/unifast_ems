@@ -22,7 +22,7 @@ class Action
 	function login()
 	{
 		extract($_POST);
-		$qry = $this->db->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tbl_user_accounts where email = '" . $email . "' and password = '" . md5($password) . "' and type= 1 ");
+		$qry = $this->db->query("SELECT *,concat(last_name,', ',first_name,' ',middle_name) as name FROM tbl_unifast_staff where email = '" . $email . "' and password = '" . md5($password) . "' and type= 1 ");
 		if ($qry->num_rows > 0) {
 			foreach ($qry->fetch_array() as $key => $value) {
 				if ($key != 'password' && !is_numeric($key))
@@ -46,7 +46,7 @@ class Action
 	function login2()
 	{
 		extract($_POST);
-		$qry = $this->db->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM tbl_user_accounts where email = '" . $email . "' and password = '" . md5($password) . "'  and type= 2 ");
+		$qry = $this->db->query("SELECT *,concat(last_name,', ',first_name,' ',middle_name) as name FROM tbl_unifast_staff where email = '" . $email . "' and password = '" . md5($password) . "'  and type= 2 ");
 		if ($qry->num_rows > 0) {
 			foreach ($qry->fetch_array() as $key => $value) {
 				if ($key != 'password' && !is_numeric($key))
@@ -90,7 +90,7 @@ class Action
 		header("location:../attendees/index.php");
 	}
 
-	function save_user()
+	function save_staff_user()
 	{
 		extract($_POST);
 		$data = "";
@@ -106,16 +106,48 @@ class Action
 		if (!empty($cpass) && !empty($password)) {
 			$data .= ", password=md5('$password') ";
 		}
+		$check = $this->db->query("SELECT * FROM tbl_unifast_staff where email ='$email' " . (!empty($id) ? " and id != {$id} " : ''))->num_rows;
+		if ($check > 0) {
+			return 2;
+			exit;
+		}
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO tbl_unifast_staff set $data");
+		} else {
+			$save = $this->db->query("UPDATE tbl_unifast_staff set $data where id = $id");
+		}
+
+		if ($save) {
+			return 1;
+		}
+	}
+
+	function save_user()
+	{
+		extract($_POST);
+		$data = "";
+		foreach ($_POST as $k => $v) {
+			$_POST[$k] = addslashes($v);
+		}
+		foreach ($_POST as $k => $v) {
+			if (!in_array($k, array('id', 'cpass', 'password')) && !is_numeric($k)) {
+				if (empty($data)) {
+					$data .= " $k='$v' ";
+				} else {
+					$data .= ", $k='$v' ";
+				}
+			}
+		}
+		
+		if (!empty($cpass) && !empty($password)) {
+			$data .= ", password=md5('$password') ";
+		}
 		$check = $this->db->query("SELECT * FROM tbl_user_accounts where email ='$email' " . (!empty($id) ? " and id != {$id} " : ''))->num_rows;
 		if ($check > 0) {
 			return 2;
 			exit;
 		}
-		if (isset($_FILES['img']) && $_FILES['img']['tmp_name'] != '') {
-			$fname = strtotime(date('y-m-d H:i')) . '_' . $_FILES['img']['name'];
-			$move = move_uploaded_file($_FILES['img']['tmp_name'], '../assets/uploads/' . $fname);
-			$data .= ", avatar = '$fname' ";
-		}
+
 		if (empty($id)) {
 			$save = $this->db->query("INSERT INTO tbl_user_accounts set $data");
 		} else {
@@ -126,6 +158,7 @@ class Action
 			return 1;
 		}
 	}
+
 	function signup()
 	{
 		extract($_POST);
@@ -173,6 +206,40 @@ class Action
 		}
 	}
 
+
+	function update_staff_stats()
+	{
+		extract($_POST);
+		$data = "";
+		foreach ($_POST as $k => $v) {
+			if (!in_array($k, array('id', 'cpass', 'table')) && !is_numeric($k)) {
+				if ($k == 'password')
+					$v = md5($v);
+				if (empty($data)) {
+					$data .= " $k='$v' ";
+				} else {
+					$data .= ", $k='$v' ";
+				}
+			}
+		}
+		$check = $this->db->query("SELECT * FROM tbl_unifast_staff where email ='$email' " . (!empty($id) ? " and id != {$id} " : ''))->num_rows;
+		if ($check > 0) {
+			return 2;
+			exit;
+		}
+
+		if (empty($id)) {
+			$save = $this->db->query("INSERT INTO tbl_unifast_staff set $data");
+		} else {
+			$save = $this->db->query("UPDATE tbl_unifast_staff set $data where id = $id");
+		}
+		if ($save) {
+			return 1;
+		}
+	}
+
+
+
 	function update_user()
 	{
 		extract($_POST);
@@ -214,6 +281,16 @@ class Action
 			return 1;
 		}
 	}
+
+	function delete_staff_user()
+	{
+		extract($_POST);
+		$delete = $this->db->query("DELETE FROM tbl_unifast_staff where id = $id");
+		if ($delete) {
+			return 1;
+		}
+	}
+
 	function delete_user()
 	{
 		extract($_POST);

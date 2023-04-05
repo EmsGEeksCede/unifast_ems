@@ -1,6 +1,6 @@
 <?php
 include 'db_connect.php';
-$qry = $conn->query("SELECT * FROM tbl_user_accounts where id = " . $_GET['id'])->fetch_array();
+$qry = $conn->query("SELECT * FROM tbl_unifast_staff where id = " . $_GET['id'])->fetch_array();
 foreach ($qry as $k => $v) {
 	$$k = $v;
 }
@@ -15,22 +15,22 @@ foreach ($qry as $k => $v) {
 				<div class="form-row align-items-center">
 					<div class="form-group col-md-4">
 						<b class="text-muted">First Name</b>
-						<input type="text" name="firstname" class="form-control" required value="<?php echo isset($firstname) ? $firstname : '' ?>" placeholder="First Name">
+						<input type="text" name="first_name" class="form-control" required value="<?php echo isset($first_name) ? $first_name : '' ?>" placeholder="First Name">
 					</div>
 					<div class="form-group col-md-4">
 						<b class="text-muted">Middle Name</b>
-						<input type="text" name="middlename" class="form-control" value="<?php echo isset($middlename) ? $middlename : '' ?>" placeholder="Middle Name">
+						<input type="text" name="middle_name" class="form-control" value="<?php echo isset($middle_name) ? $middle_name : '' ?>" placeholder="Middle Name">
 					</div>
 					<div class="form-group col-md-4">
 						<b class="text-muted">Last Name</b>
-						<input type="text" name="lastname" class="form-control" required value="<?php echo isset($lastname) ? $lastname : '' ?>" placeholder="Last Name">
+						<input type="text" name="last_name" class="form-control" required value="<?php echo isset($last_name) ? $last_name : '' ?>" placeholder="Last Name">
 					</div>
 				</div>
 
 				<div class="form-row d-flex align-items-baseline">
 					<div class="form-group col-md-4">
 						<b class="text-muted">Username</b>
-						<input type="email" class="form-control" name="email" required value="<?php echo isset($email) ? $email : '' ?>" placeholder="Email Address" readonly>
+						<input type="email" class="form-control" name="email" required value="<?php echo isset($email) ? $email : '' ?>" placeholder="Email Address">
 						<small id="#msg"></small>
 					</div>
 
@@ -44,7 +44,7 @@ foreach ($qry as $k => $v) {
 								</div>
 							</div>
 						</div>
-						<small><i><?php echo isset($id) ? "Leave this blank if you dont want to change your password" : '' ?></i></small>
+						<small><i><?php echo isset($id) ? "&nbsp;Leave this blank if you dont want to change your password" : '' ?></i></small>
 					</div>
 
 					<div class="form-group col-md-4">
@@ -61,7 +61,7 @@ foreach ($qry as $k => $v) {
 					</div>
 				</div>
 
-				<b class="text-muted">Select User Type</b>
+				<b class="text-muted">Change User Type</b>
 				<div class="form-row d-flex align-items-start">
 					<div class="form-group col-sm-2">
 						<select name="type" id="type" class="custom-select">
@@ -130,7 +130,7 @@ foreach ($qry as $k => $v) {
 			}
 		}
 		$.ajax({
-			url: 'ajax.php?action=save_user',
+			url: 'ajax.php?action=update_staff_stats',
 			data: new FormData($(this)[0]),
 			cache: false,
 			contentType: false,

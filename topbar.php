@@ -26,7 +26,7 @@
               <span>
                 <div class="d-felx badge-pill">
                   <span class="fa fa-user mr-2"></span>
-                  <span><b><?php echo ucwords($_SESSION['login_firstname']) ?></b></span>
+                  <span><b><?php echo ucwords($_SESSION['login_first_name']) ?></b></span>
                   <span class="fa fa-angle-down ml-2"></span>
                 </div>
               </span>

@@ -10,7 +10,7 @@
           <!-- <a href="./index.php?page=staff_list"> -->
             <span class="info-box-text">Staff Account</span></a>
           <span class="info-box-number">
-            <?php echo $conn->query("SELECT * FROM tbl_user_accounts where type != 3")->num_rows; ?>
+            <?php echo $conn->query("SELECT * FROM tbl_unifast_staff where type = 2 && status = 'ACTIVE'")->num_rows; ?>
           </span>
         </div>
       </div>

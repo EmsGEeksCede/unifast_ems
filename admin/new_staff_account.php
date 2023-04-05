@@ -9,13 +9,13 @@ include 'header.php';
 				<b class="text-muted">Full Name</b>
 				<div class="form-row align-items-center">
 					<div class="form-group col-md-4">
-						<input type="text" name="firstname" class="form-control" required value="<?php echo isset($firstname) ? $firstname : '' ?>" placeholder="First Name">
+						<input type="text" name="first_name" class="form-control" required value="<?php echo isset($first_name) ? $first_name : '' ?>" placeholder="First Name">
 					</div>
 					<div class="form-group col-md-4">
-						<input type="text" name="middlename" class="form-control" value="<?php echo isset($middlename) ? $middlename : '' ?>" placeholder="Middle Name">
+						<input type="text" name="middle_name" class="form-control" value="<?php echo isset($middle_name) ? $middle_name : '' ?>" placeholder="Middle Name">
 					</div>
 					<div class="form-group col-md-4">
-						<input type="text" name="lastname" class="form-control" required value="<?php echo isset($lastname) ? $lastname : '' ?>" placeholder="Last Name">
+						<input type="text" name="last_name" class="form-control" required value="<?php echo isset($last_name) ? $last_name : '' ?>" placeholder="Last Name">
 					</div>
 				</div>
 				<!-- <div class="form-group">
@@ -74,23 +74,31 @@ include 'header.php';
 
 				<!-- <b class="text-muted">Select User Type</b> -->
 				<!-- <div class="form-row d-flex align-items-start"> -->
-				<div class="form-group col-sm-2">
-					<select name="type" id="type" class="custom-select" hidden>
-						<option value="1" <?php // echo isset($type) && $type == 1 ? 'selected' : '' 
-											?> disabled>Select here</option>
-						<option value="2" <?php // echo isset($type) && $type == 2 ? 'selected' : '' 
-											?> selected>Staff</option>
-						<option value="3" <?php // echo isset($type) && $type == 3 ? 'selected' : '' 
-											?> disabled>Attendees</option>
-					</select>
-				</div>
+					<!-- <div class="form-group col-sm-2"> -->
+						<select name="type" id="type" class="custom-select" hidden>
+							<!-- <option value="0" disabled>Select here</option> -->
+							<option value="1" <?php // echo isset($type) && $type == 1 ? 'selected' : '' 
+												?> disabled>Admin</option>
+							<option value="2" <?php // echo isset($type) && $type == 2 ? 'selected' : '' 
+												?> selected>Staff</option>
+						</select>
+					<!-- </div> -->
+
+					<!-- <div class="form-group col-sm-2"> -->
+						<select name="status" id="status" class="custom-select" hidden>
+							<option value="ACTIVE" <?php echo isset($status) && $status == 'ACTIVE' ? 'selected' : ''
+													?> selected>ACTIVE</option>
+							<option value="INACTIVE" <?php echo isset($status) && $status == 'INACTIVE' ? 'selected' : ''
+														?> disabled>INACTIVE</option>
+						</select>
+					<!-- </div> -->
 				<!-- </div> -->
 
 
 				<hr>
 				<div class="col-lg-12 text-right justify-content-center d-flex">
 					<button class="btn btn-primary mr-3	col-md-2">SAVE</button>
-					<button class="btn btn-secondary col-md-2" type="button" onclick="location.href = 'index.php?page=attendees_list'">CANCEL</button>
+					<button class="btn btn-secondary col-md-2" type="button" onclick="location.href = 'index.php?page=staff_list'">CANCEL</button>
 				</div>
 			</form>
 		</div>
@@ -142,7 +150,7 @@ include 'header.php';
 			}
 		}
 		$.ajax({
-			url: 'ajax.php?action=save_user',
+			url: 'ajax.php?action=save_staff_user',
 			data: new FormData($(this)[0]),
 			cache: false,
 			contentType: false,

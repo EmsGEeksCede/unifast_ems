@@ -9,12 +9,12 @@
 		<div class="card-body">
 			<table class="table table-hover table-responsive table-bordered" id="list">
 				<colgroup>
-					<col width="5%">
+					<col width="2%">
+					<col width="3%">
+					<col width="20%">
+					<col width="20%">
+					<col width="7%">
 					<col width="10%">
-					<col width="20%">
-					<col width="20%">
-					<col width="10%">
-					<col width="20%">
 					<col width="5%">
 					<col width="10%">
 				</colgroup>
@@ -46,7 +46,7 @@
 							<th class="text-center"><?php echo $i++ ?></th>
 							<td><?php echo ucwords($row['hei_region']) ?></td>
 							<td><?php echo ucwords($row['hei_name']) ?></td>
-							<td><?php echo ucwords($row['name']) ?></td>
+							<td><?php echo ucwords($row['name']) ?><!--<span><a href="javascript:void(0)" class="view_data" data-id="<?php echo $row['id'] ?>"><span class="fa fa-qrcode"></span></a></span>--></td>
 							<td><?php echo ucwords($row['contact']) ?></td>
 							<td><?php echo $row['email'] ?></td>
 							<td class="text-center"><?php echo ucwords($row['gender']) ?></td>
@@ -79,6 +79,9 @@
 		$('.view_user').click(function() {
 			uni_modal("<i class='fa fa-id-card'></i> User Details", "view_user.php?id=" + $(this).attr('data-id'))
 		})
+		// $('.view_data').click(function(){
+		// 	uni_modal("QR","./admin/view.php?id="+$(this).attr('data-id'))
+		// })
 		$('.delete_user').click(function() {
 			_conf("Are you sure to delete this user?", "delete_user", [$(this).attr('data-id')])
 		})

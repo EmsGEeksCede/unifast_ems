@@ -46,8 +46,18 @@ if($action == 'signup'){
 	if($save)
 		echo $save;
 }
+if($action == 'save_staff_user'){
+	$save = $crud->save_staff_user();
+	if($save)
+		echo $save;
+}
 if($action == 'save_user'){
 	$save = $crud->save_user();
+	if($save)
+		echo $save;
+}
+if($action == 'update_staff_user'){
+	$save = $crud->update_user();
 	if($save)
 		echo $save;
 }
@@ -56,10 +66,15 @@ if($action == 'update_user'){
 	if($save)
 		echo $save;
 }
+if($action == 'delete_staff_user'){
+	$delete = $crud->delete_staff_user();
+	if($delete)
+		echo $delete;
+}
 if($action == 'delete_user'){
-	$save = $crud->delete_user();
-	if($save)
-		echo $save;
+	$delete = $crud->delete_user();
+	if($delete)
+		echo $delete;
 }
 if($action == 'save_event'){
 	$save = $crud->save_event();
@@ -68,6 +83,11 @@ if($action == 'save_event'){
 }
 if($action == 'update_event_stats'){
 	$save = $crud->update_event_stats();
+	if($save)
+		echo $save;
+}
+if($action == 'update_staff_stats'){
+	$save = $crud->update_staff_stats();
 	if($save)
 		echo $save;
 }

@@ -45,12 +45,12 @@ foreach ($qry as $k => $v) {
 				<div class="card-body">
 					<ul class="nav flex-column">
 						<?php
-						$r = $conn->query("SELECT ar.*,concat(u.lastname,', ',u.firstname,' ',u.middlename) as name,u.firstname,u.lastname FROM assigned_registrar ar inner join tbl_user_accounts u on u.id = ar.user_id where event_id = {$_GET['id']} order by concat(u.lastname,', ',u.firstname,' ',u.middlename) asc");
+						$r = $conn->query("SELECT ar.*,concat(u.last_name,', ',u.first_name) as name,u.first_name,u.last_name,u.middle_name FROM assigned_registrar ar inner join tbl_unifast_staff u on u.id = ar.user_id where event_id = {$_GET['id']} order by concat(u.last_name,', ',u.first_name) asc");
 						while ($row = $r->fetch_assoc()) :
 						?>
 							<li class="nav-item text-dark">
 								<div class="d-flex align-items-center py-1">
-									<span class="brand-image mr-2 img-circle elevation-2 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500" style="width: 30px;height:30px"><b><?php echo strtoupper(substr($row['firstname'], 0, 1) . substr($row['lastname'], 0, 1)) ?></b></span>
+									<span class="brand-image mr-2 img-circle elevation-2 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500" style="width: 30px;height:30px"><b><?php echo strtoupper(substr($row['first_name'], 0, 1) . substr($row['last_name'], 0, 1)) ?></b></span>
 									<span><b><?php echo ucwords($row['name']) ?></b></span>
 								</div>
 							</li>
